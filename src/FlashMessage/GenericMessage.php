@@ -14,10 +14,7 @@ declare(strict_types=1);
 
 namespace Markocupic\ContaoFlashMessage\FlashMessage;
 
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-
-#[AutoconfigureTag('mc.flash_message.message_handler')]
-class Message extends AbstractMessage implements MessageInterface
+class GenericMessage extends AbstractMessage
 {
     public const TYPE_ERROR = 'ERROR';
 
@@ -33,9 +30,6 @@ class Message extends AbstractMessage implements MessageInterface
 
     public const TYPE_RAW = 'RAW';
 
-    /**
-     * Return the flash subkey.
-     */
     public static function getName(): string
     {
         return 'generic';

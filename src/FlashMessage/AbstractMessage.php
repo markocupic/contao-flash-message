@@ -99,6 +99,10 @@ abstract class AbstractMessage
         $flashBag = $session->getFlashBag();
 
         foreach ($this->getTypes() as $type) {
+            if (!$flashBag->has($this->getFlashBagKeyForType($type))) {
+                continue;
+            }
+
             $messages[$type] = array_unique($flashBag->get($this->getFlashBagKeyForType($type)));
         }
 
@@ -140,6 +144,10 @@ abstract class AbstractMessage
         $flashBag = $session->getFlashBag();
 
         foreach ($this->getTypes() as $type) {
+            if (!$flashBag->has($this->getFlashBagKeyForType($type))) {
+                continue;
+            }
+
             $messages[$type] = array_unique($flashBag->peek($this->getFlashBagKeyForType($type)));
         }
 

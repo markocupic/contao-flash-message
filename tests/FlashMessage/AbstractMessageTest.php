@@ -160,12 +160,7 @@ class AbstractMessageTest extends TestCase
 
         $expected = [
             Message::TYPE_ERROR   => ['Error Message'],
-            Message::TYPE_WARNING => [],
-            Message::TYPE_CONFIRM => [],
-            Message::TYPE_NEW     => [],
-            Message::TYPE_INFO    => [],
             Message::TYPE_SUCCESS => ['Success Message 1', 'Success Message 2'],
-            Message::TYPE_RAW     => [],
         ];
 
         $this->assertSame($expected, $this->message->getAll());
@@ -186,13 +181,8 @@ class AbstractMessageTest extends TestCase
             });
 
         $expected = [
-            Message::TYPE_ERROR   => [],
-            Message::TYPE_WARNING => [],
-            Message::TYPE_CONFIRM => [],
-            Message::TYPE_NEW     => [],
             Message::TYPE_INFO    => ['Info Message'],
             Message::TYPE_SUCCESS => ['Duplicate Message'],
-            Message::TYPE_RAW     => [],
         ];
 
         $this->assertSame($expected, $this->message->getAll());
@@ -251,12 +241,7 @@ class AbstractMessageTest extends TestCase
 
         $expected = [
             Message::TYPE_ERROR   => ['Error Message'],
-            Message::TYPE_WARNING => [],
-            Message::TYPE_CONFIRM => [],
-            Message::TYPE_NEW     => [],
-            Message::TYPE_INFO    => [],
             Message::TYPE_SUCCESS => ['Success Message 1', 'Success Message 2'],
-            Message::TYPE_RAW     => [],
         ];
 
         $this->assertSame($expected, $this->message->peekAll());
@@ -277,13 +262,8 @@ class AbstractMessageTest extends TestCase
             });
 
         $expected = [
-            Message::TYPE_ERROR   => [],
-            Message::TYPE_WARNING => [],
-            Message::TYPE_CONFIRM => [],
-            Message::TYPE_NEW     => [],
             Message::TYPE_INFO    => ['Info Message'],
             Message::TYPE_SUCCESS => ['Duplicate Message'],
-            Message::TYPE_RAW     => [],
         ];
 
         $this->assertSame($expected, $this->message->peekAll());

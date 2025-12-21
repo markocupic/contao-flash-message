@@ -33,18 +33,35 @@ class MessageExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_messages', [$this, 'getMessages']),
+            new TwigFunction('has_flash_messages', [$this, 'hasMessages']),
+            new TwigFunction('get_flash_messages', [$this, 'getMessages']),
         ];
     }
 
-    public function getMessages(string $messageSystem = 'generic'): array
+    public function hasMessages(string $messageNamespace = 'default'): bool
     {
-        if (!$this->messageHandlers->has($messageSystem)) {
-            throw new \Exception('Message system '.$messageSystem.' not found.');
+        if (!$this->messageHandlers->has($messageNamespace)) {
+            throw new \Exception('Message namespace '.$messageNamespace.' not found.');
         }
 
         /** @var Message $message */
-        $message = $this->messageHandlers->get($messageSystem);
+        $message = $this->messageHandlers->get($messageNamespace);
+
+        if (!$message->hasMessages()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getMessages(string $messageNamespace = 'default'): array
+    {
+        if (!$this->messageHandlers->has($messageNamespace)) {
+            throw new \Exception('Message namespace '.$messageNamespace.' not found.');
+        }
+
+        /** @var Message $message */
+        $message = $this->messageHandlers->get($messageNamespace);
 
         return $message->getAll();
     }
