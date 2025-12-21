@@ -1,0 +1,51 @@
+{
+    "name": "markocupic/contao-flash-message",
+    "description": "Adds a flash message service to your Contao application",
+    "keywords": [
+        "contao",
+        "bundle",
+        "flash",
+        "message"
+    ],
+    "type": "contao-bundle",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Marko Cupic",
+            "email": "m.cupic@gmx.ch",
+            "homepage": "https://github.com/markocupic/contao-flash-message",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/markocupic/contao-flash-message/issues",
+        "source": "https://github.com/markocupic/contao-flash-message"
+    },
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^5.3"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.12",
+        "contao/easy-coding-standard": "^6.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "Markocupic\\ContaoFlashMessage\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "contao-components/installer": false,
+            "contao/manager-plugin": false,
+            "contao-community-alliance/composer-plugin": true
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Markocupic\\ContaoFlashMessage\\ContaoManager\\Plugin"
+    },
+    "scripts": {
+        "cs-fixer": "@php tools/ecs/vendor/bin/ecs check config/ contao/ src/ templates/ tests/ --config tools/ecs/config/default.php --fix --ansi",
+        "unit-tests": "@php tools/phpunit/vendor/bin/phpunit -c tools/phpunit/phpunit.xml.dist"
+    }
+}
