@@ -13,7 +13,9 @@ declare(strict_types=1);
  */
 
 namespace Markocupic\ContaoFlashMessage\FlashMessage;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
+#[AutoconfigureTag('mc.flash_message.message_handler')]
 interface MessageInterface
 {
     public static function getName(): string;

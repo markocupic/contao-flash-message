@@ -7,7 +7,6 @@ Message Handler eingerichtet werden, welcher die Flash Messages unter einem eige
 Alle Messages werden in ihrem eigenen Subkey/Namespace abgelegt.
 
 Um einen neuen Message-Handler zu erzeugen, muss nur eine neue Message-Klasse erstellt werden, welche `Markocupic\ContaoFlashMessage\FlashMessage\MessageInterface` implementiert.
-Zusätzlich muss der Message-Handler mit `mc.flash_message.message_handler` getaggt werden.
 
 ```php
 <?php
@@ -16,9 +15,7 @@ namespace App\FlashMessage\Checkout;
 
 use Markocupic\ContaoFlashMessage\FlashMessage\GenericMessage;
 use Markocupic\ContaoFlashMessage\FlashMessage\MessageInterface;
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
-#[AutoconfigureTag('mc.flash_message.message_handler')]
 class Message extends GenericMessage implements MessageInterface
 {
     /**
