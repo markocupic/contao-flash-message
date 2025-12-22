@@ -14,13 +14,31 @@ declare(strict_types=1);
 
 namespace Markocupic\ContaoFlashMessage\FlashMessage;
 
-class Message extends GenericMessage implements MessageInterface
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\ConfirmTrait;
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\ErrorTrait;
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\InfoTrait;
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\NewTrait;
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\RawTrait;
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\SuccessTrait;
+use Markocupic\ContaoFlashMessage\FlashMessage\Trait\WarningTrait;
+
+class Message extends AbstractMessage implements MessageInterface
 {
-    /**
-     * Return the flash subkey.
-     */
+    use ConfirmTrait;
+    use ErrorTrait;
+    use InfoTrait;
+    use NewTrait;
+    use RawTrait;
+    use SuccessTrait;
+    use WarningTrait;
+
     public static function getName(): string
     {
         return 'default';
+    }
+
+    public function getTypes(): array
+    {
+        return [self::TYPE_CONFIRM, self::TYPE_ERROR, self::TYPE_INFO, self::TYPE_NEW, self::TYPE_RAW, self::TYPE_SUCCESS, self::TYPE_WARNING];
     }
 }
