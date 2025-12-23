@@ -32,11 +32,6 @@ class Message extends AbstractMessage implements MessageInterface
     use SuccessTrait;
     use WarningTrait;
 
-    public static function getName(): string
-    {
-        return 'default';
-    }
-
     public function getTypes(): array
     {
         return [self::TYPE_CONFIRM, self::TYPE_ERROR, self::TYPE_INFO, self::TYPE_NEW, self::TYPE_RAW, self::TYPE_SUCCESS, self::TYPE_WARNING];

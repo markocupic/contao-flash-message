@@ -20,7 +20,13 @@ abstract class AbstractMessage
 {
     public function __construct(
         protected readonly RequestStack $requestStack,
+        protected readonly string $name,
     ) {
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function has(string $type): bool
@@ -157,9 +163,9 @@ abstract class AbstractMessage
     /**
      * Return the messages with a wrapping container as HTML.
      */
-    public function generate(bool $peek = false): string
+    public function render(bool $peek = false): string
     {
-        $messages = $this->generateUnwrapped($peek);
+        $messages = $this->renderUnwrapped($peek);
 
         if ($messages) {
             $messages = '<div class="tl_message">'.$messages.'</div>';
@@ -171,7 +177,7 @@ abstract class AbstractMessage
     /**
      * Return the messages as HTML.
      */
-    public function generateUnwrapped(bool $peek = false): string
+    public function renderUnwrapped(bool $peek = false): string
     {
         $session = $this->requestStack->getSession();
 
@@ -217,7 +223,7 @@ abstract class AbstractMessage
         $flashBag = $session->getFlashBag();
 
         // Find all contao. keys (see #3393)
-        $keys = preg_grep('(^mc_flash_message\.'.static::getName().'\.)', $flashBag->keys());
+        $keys = preg_grep('(^mc_flash_message\.'.$this->getName().'\.)', $flashBag->keys());
 
         foreach ($keys as $key) {
             $flashBag->get($key); // clears the message
@@ -233,6 +239,6 @@ abstract class AbstractMessage
             throw new \Exception(\sprintf('Invalid message type %s.', $type));
         }
 
-        return 'mc_flash_message.'.static::getName().'.'.strtolower($type);
+        return 'mc_flash_message.'.$this->getName().'.'.strtolower($type);
     }
 }

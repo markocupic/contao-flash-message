@@ -14,19 +14,17 @@ declare(strict_types=1);
 
 namespace Markocupic\ContaoFlashMessage\Twig\Extension;
 
-use Markocupic\ContaoTranslationBundle\Message\Message;
-use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Markocupic\ContaoFlashMessage\FlashMessage\MessageInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class MessageExtension extends AbstractExtension
 {
     public function __construct(
-        #[AutowireLocator('mc.flash_message.message_handler', defaultIndexMethod: 'getName')]
-        private ContainerInterface $messageHandlers,
-        private readonly RequestStack $requestStack,
+        #[Autowire(service: 'markocupic_contao_flash_message.flash_message.locator')]
+        private readonly ServiceLocator $locator,
     ) {
     }
 
@@ -40,12 +38,12 @@ class MessageExtension extends AbstractExtension
 
     public function hasMessages(string $messageNamespace = 'default'): bool
     {
-        if (!$this->messageHandlers->has($messageNamespace)) {
+        if (!$this->locator->has($messageNamespace)) {
             throw new \Exception('Message namespace '.$messageNamespace.' not found.');
         }
 
-        /** @var Message $message */
-        $message = $this->messageHandlers->get($messageNamespace);
+        /** @var MessageInterface $message */
+        $message = $this->locator->get($messageNamespace);
 
         if (!$message->hasMessages()) {
             return false;
@@ -56,18 +54,19 @@ class MessageExtension extends AbstractExtension
 
     public function getMessages(string $messageNamespace = 'default'): array
     {
-        if (!$this->messageHandlers->has($messageNamespace)) {
+        // die(print_r($this->locator->getProvidedServices(),true));
+        if (!$this->locator->has($messageNamespace)) {
             throw new \Exception('Message namespace '.$messageNamespace.' not found.');
         }
 
-        /** @var Message $message */
-        $message = $this->messageHandlers->get($messageNamespace);
+        /** @var MessageInterface $message */
+        $message = $this->locator->get($messageNamespace);
 
         return $message->getAll();
     }
 
     private function getMessageHandlers(): array
     {
-        return $this->messageHandlers->getProvidedServices();
+        return $this->locator->getProvidedServices();
     }
 }

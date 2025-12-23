@@ -14,12 +14,9 @@ declare(strict_types=1);
 
 namespace Markocupic\ContaoFlashMessage\FlashMessage;
 
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-
-#[AutoconfigureTag('mc.flash_message.message_handler')]
 interface MessageInterface
 {
-    public static function getName(): string;
+    public function getName(): string;
 
     public function getTypes(): array;
 
@@ -37,9 +34,9 @@ interface MessageInterface
 
     public function peekAll(): array;
 
-    public function generate(bool $peek = false): string;
+    public function render(bool $peek = false): string;
 
-    public function generateUnwrapped(bool $peek = false): string;
+    public function renderUnwrapped(bool $peek = false): string;
 
     public function reset(): void;
 }

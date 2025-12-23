@@ -7,3 +7,14 @@ services:
     Markocupic\ContaoFlashMessage\:
         resource: ../src/
         exclude: ../src/{DependencyInjection}
+
+    markocupic_contao_flash_message.flash_message.locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        arguments:
+            - ~ # Will be replaced by FlashMessageCompilerPass
+
+    markocupic_contao_flash_message.flash_message.default:
+        class: Markocupic\ContaoFlashMessage\FlashMessage\Message
+        tags:
+            - { name: 'mc.flash_message.message_handler', messageId: 'default' }
+
